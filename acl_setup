@@ -1,0 +1,49 @@
+---
+- name: ACL for APP1
+  become: true
+  gather_facts: false
+  hosts: stapp01
+  tasks: 
+      - name: create file
+        ansible.builtin.file:
+            path: /opt/finance/blog.txt
+            state: touch
+      - name: set acl
+        ansible.builtin.acl:
+            path: /opt/finance/blog.txt
+            entity: "{{ ansible_user }}"
+            etype: group
+            permissions: r
+            state: present
+- name: ACL for APP2
+  become: true
+  gather_facts: false
+  hosts: stapp02
+  tasks: 
+      - name: create file
+        ansible.builtin.file:
+            path: /opt/finance/story.txt
+            state: touch
+      - name: set acl
+        ansible.builtin.acl:
+            path: /opt/finance/story.txt
+            entity: "{{ ansible_user }}"
+            etype: group
+            permissions: rw
+            state: present
+- name: ACL for APP3
+  become: true
+  gather_facts: false
+  hosts: stapp03
+  tasks: 
+      - name: create file
+        ansible.builtin.file:
+            path: /opt/finance/media.txt
+            state: touch
+      - name: set acl
+        ansible.builtin.acl:
+            path: /opt/finance/media.txt
+            entity: "{{ ansible_user }}"
+            etype: group
+            permissions: rw
+            state: present

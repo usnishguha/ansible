@@ -1,0 +1,31 @@
+---
+- name: Replacement in APP01
+  become: true
+  gather_facts: false
+  hosts: stapp01
+  tasks: 
+      - name: replace string
+        ansible.builtin.replace:
+            path: /opt/sysops/blog.txt
+            regexp: xFusionCorp
+            replace: Nautilus
+- name: Replacement in APP02
+  become: true
+  gather_facts: false
+  hosts: stapp02
+  tasks: 
+      - name: replace string
+        ansible.builtin.replace:
+            path: /opt/sysops/story.txt
+            regexp: Nautilus
+            replace: KodeKloud
+- name: Replacement in APP01
+  become: true
+  gather_facts: false
+  hosts: stapp03
+  tasks: 
+      - name: replace string 
+        ansible.builtin.replace:
+            path: /opt/sysops/media.txt
+            regexp: KodeKloud
+            replace: xFusionCorp
