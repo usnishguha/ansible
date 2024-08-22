@@ -1,0 +1,24 @@
+---
+- name: Create facts file
+  hosts: stapp01, stapp02, stapp03
+  become: true
+  tasks:
+      - name: create file
+        ansible.builtin.blockinfile:
+              path: /root/facts.txt
+              create: yes
+              block: |
+                Ansible managed node architecture is {{ ansible_architecture }}
+      - name: install httpd
+        ansible.builtin.yum:
+              name: httpd
+              state: latest
+      - name: Start HTTP Service
+        ansible.builtin.service:
+              name: httpd
+              enabled: yes
+      - name: Copy file
+        ansible.builtin.copy:
+              src: /root/facts.txt
+              dest: /var/www/html/index.html
+              remote_src: true
