@@ -3,7 +3,7 @@
   hosts: stapp02
   become: true
   vars_files:
-      - passwords.yml
+      - passwords.yml #[ encrypted file, encryption done by using ansible-vault encrypt <encryption_password> passwords.yml ]#
   tasks:
       - name: create groups
         ansible.builtin.group:
