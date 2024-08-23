@@ -1,0 +1,31 @@
+---
+- name: testing conditionals
+  hosts: all
+  become: true
+  tasks:
+    - name: copy files in APP01
+      ansible.builtin.copy:
+        src: /usr/src/finance/blog.txt
+        dest: /opt/finance/blog.txt
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      when: 'ansible_facts[hostname]' == "stapp01"
+
+    - name: copy files in APP02
+      ansible.builtin.copy:
+        src: /usr/src/finance/story.txt
+        dest: /opt/finance/story.txt
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      when: 'ansible_facts[hostname]' == "stapp02"
+
+    - name: copy files in APP03
+      ansible.builtin.copy:
+        src: /usr/src/finance/media.txt
+        dest: /opt/finance/media.txt
+        mode: '0755'
+        owner: "{{ ansible_user }}"
+        group: "{{ ansible_user }}"
+      when: 'ansible_facts[hostname]' == "stapp03"
